@@ -5,6 +5,7 @@ import com.example.airline_api.models.Flight;
 import com.example.airline_api.models.Passenger;
 import com.example.airline_api.repositories.FlightRepository;
 import com.example.airline_api.repositories.PassengerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,20 +31,51 @@ public class FlightService {
         return flightRepository.findById(id);
     }
 
-    public Optional<Flight> addPassengerToFlight(Long id, PassengerDTO passengerDTO) {
-        Optional<Passenger> checkPassenger = passengerRepository.findById(passengerDTO.getPassengerId());
+    public List<Flight> getFlightByDestination(String destination){
+        return flightRepository.findByDestination(destination);
+    }
+
+    public boolean isFlightFull(Long id){
+        Flight flight = flightRepository.findById(id).get();
+        int capacity = flight.getCapacity();
+        int passengersOnboard = flight.getPassengers().size();
+
+        if (passengersOnboard < capacity){
+            return false;
+        }
+
+        return true;
+    }
+
+    public Flight addPassengerToFlight(Long id, PassengerDTO passengerDTO) {
+        Passenger passenger = passengerRepository.findById(passengerDTO.getPassengerId()).get();
+        Flight flight = flightRepository.findById(id).get();
+        passenger.addFlight(flight);
+        passengerRepository.save(passenger);
+
+        return flightRepository.findById(id).get();
+    }
+
+    @Transactional
+    public void cancelFlight(Long id){
+        // Find Flight
         Optional<Flight> checkFlight = flightRepository.findById(id);
-        if (checkPassenger.isPresent() && checkFlight.isPresent()){
-            Passenger passenger = checkPassenger.get();
+
+        // Check if Flight is present
+        if (checkFlight.isPresent()){
             Flight flight = checkFlight.get();
 
-            List<Passenger> passengers = flight.getPassengers();
-            passengers.add(passenger);
+            // Remove flight from passenger
+            for (Passenger passenger : flight.getPassengers()){
+                passenger.removeFlight(flight);
+            }
 
-            flight.setPassengers(passengers);
-
+            // save updated flight
             flightRepository.save(flight);
+
+            // delete flight
+            flightRepository.deleteById(id);
         }
-        return flightRepository.findById(id);
     }
+
 }

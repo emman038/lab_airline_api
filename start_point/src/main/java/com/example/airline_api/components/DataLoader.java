@@ -9,6 +9,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -34,9 +37,9 @@ public class DataLoader implements ApplicationRunner {
         passengerService.addNewPassenger(passenger6);
         passengerService.addNewPassenger(passenger7);
 
-        Flight flight1 = new Flight("London", 300, "20/11/2023", "10:30");
-        Flight flight2 = new Flight("China", 150, "25/12/2023", "12:30");
-        Flight flight3 = new Flight("Portugal", 400, "01/01/2024", "16:30");
+        Flight flight1 = new Flight("London", 300, LocalDateTime.of(2023, 11, 30, 10,30));
+        Flight flight2 = new Flight("China", 150, LocalDateTime.of(2024, 1, 3, 12,45));
+        Flight flight3 = new Flight("Portugal", 400, LocalDateTime.of(2023, 12, 30, 11,15));
 
         flightService.addFlight(flight1);
         flightService.addFlight(flight2);

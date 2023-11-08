@@ -3,6 +3,8 @@ package com.example.airline_api.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +19,16 @@ public class Flight {
     private String destination;
     @Column
     private int capacity;
-    @Column(name = "departure")
-    private String departureDate;
-    @Column(name = "departure_time")
-    private String departureTime;
+    @Column(name = "departure_date_time")
+    private LocalDateTime departureDateTime;
     @ManyToMany(mappedBy = "flights")
     @JsonIgnoreProperties({"flights"})
     private List<Passenger> passengers;
 
-    public Flight(String destination, int capacity, String departureDate, String departureTime) {
+    public Flight(String destination, int capacity, LocalDateTime departureDateTime) {
         this.destination = destination;
         this.capacity = capacity;
-        this.departureDate = departureDate;
-        this.departureTime = departureTime;
+        this.departureDateTime = departureDateTime;
         this.passengers = new ArrayList<>();
     }
 
@@ -60,20 +59,12 @@ public class Flight {
         this.capacity = capacity;
     }
 
-    public String getDepartureDate() {
-        return departureDate;
+    public LocalDateTime getDepartureDateTime() {
+        return this.departureDateTime;
     }
 
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
+        this.departureDateTime = departureDateTime;
     }
 
     public List<Passenger> getPassengers() {
@@ -82,5 +73,9 @@ public class Flight {
 
     public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
+    }
+
+    public void removePassenger(Passenger passenger){
+        this.passengers.remove(passenger);
     }
 }

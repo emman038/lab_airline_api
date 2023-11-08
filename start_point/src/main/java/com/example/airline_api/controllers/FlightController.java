@@ -18,12 +18,13 @@ public class FlightController {
 
     @Autowired
     FlightService flightService;
-    @Autowired
-    PassengerService passengerService;
 
     // Display all available flights
     @GetMapping
-    public ResponseEntity<List<Flight>> getAllFlights(){
+    public ResponseEntity<List<Flight>> getAllFlights(@RequestParam(required = false) String destination){
+        if (destination != null){
+            return new ResponseEntity<>(flightService.getFlightByDestination(destination), HttpStatus.OK);
+        }
         return new ResponseEntity<>(flightService.getAllFlights(), HttpStatus.OK);
     }
 
@@ -46,20 +47,30 @@ public class FlightController {
     // Book passenger on a flight
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Flight> addPassengerToFlight(@PathVariable Long id, @RequestBody PassengerDTO passengerDTO){
-        Optional<Flight> checkFlightUpdated = flightService.addPassengerToFlight(id, passengerDTO);
-
-
-        if (checkFlightUpdated.isPresent()){
-            return new ResponseEntity<>(checkFlightUpdated.get(), HttpStatus.OK);
+        // Validation
+        Optional<Flight> checkFlight = flightService.getFlightById(id);
+        if (checkFlight.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        if (!flightService.isFlightFull(id)) {
+            return new ResponseEntity<>(flightService.addPassengerToFlight(id, passengerDTO), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
 
     }
 
     // Cancel flight
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity cancelFlight(){
-        return null;
+    public ResponseEntity<Long> cancelFlight(@PathVariable Long id){
+        flightService.cancelFlight(id);
+
+        // Validation to see if flight was cancelled (if method worked)
+        if (flightService.getFlightById(id).isEmpty()){
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 }
