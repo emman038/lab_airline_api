@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56033701-33ca-4b76-9a72-73c321910924" name="Changes" comment="" />
+    <list default="true" id="56033701-33ca-4b76-9a72-73c321910924" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/start_point/src/main/java/com/example/airline_api/controllers/FlightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/start_point/src/main/java/com/example/airline_api/controllers/FlightController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_point/src/main/java/com/example/airline_api/controllers/PassengerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/start_point/src/main/java/com/example/airline_api/controllers/PassengerController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2XrQBYweBevBaKBinJnlbwnFUEU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -21,7 +27,9 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/emmanuelajayi/BNTA/bnta_work/week_06/day_2/lab_airline_api"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
